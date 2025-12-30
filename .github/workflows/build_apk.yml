@@ -89,6 +89,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: rosettadrone-artifacts
-          path: |
-            app/build/outputs/apk/**/*.apk
-            app/build/outputs/bundle/**/*.aab
+          path: app/build/outputs/
