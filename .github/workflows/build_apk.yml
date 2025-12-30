@@ -12,11 +12,9 @@ jobs:
     - name: Create placeholder sdkmanager wrapper
       run: |
         sudo mkdir -p /usr/local/lib/android/sdk/tools/bin
-        cat <<'EOF' | sudo tee /usr/local/lib/android/sdk/tools/bin/sdkmanager > /dev/null
-#!/usr/bin/env bash
-echo "Placeholder sdkmanager: will be replaced during workflow." >&2
-exit 0
-EOF
+        echo '#!/usr/bin/env bash' | sudo tee /usr/local/lib/android/sdk/tools/bin/sdkmanager > /dev/null
+        echo 'echo "Placeholder sdkmanager: will be replaced during workflow." >&2' | sudo tee -a /usr/local/lib/android/sdk/tools/bin/sdkmanager > /dev/null
+        echo 'exit 0' | sudo tee -a /usr/local/lib/android/sdk/tools/bin/sdkmanager > /dev/null
         sudo chmod +x /usr/local/lib/android/sdk/tools/bin/sdkmanager
 
     - name: Checkout
