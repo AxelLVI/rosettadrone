@@ -18,6 +18,29 @@ jobs:
       with:
         lfs: true
 
+    - name: Install Android command-line tools (sdkmanager)
+      run: |
+        set -e
+        export ANDROID_SDK_ROOT="$HOME/android-sdk"
+        export ANDROID_HOME="$ANDROID_SDK_ROOT"
+        mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
+        cd $HOME
+        wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
+        unzip -q cmdline-tools.zip -d cmdline-tools-tmp
+        mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+        mv cmdline-tools-tmp/cmdline-tools/* "$ANDROID_SDK_ROOT/cmdline-tools/latest/"
+        rm -rf cmdline-tools.zip cmdline-tools-tmp
+        echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> $GITHUB_ENV
+        echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+        echo "PATH=$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/platform-tools:$PATH" >> $GITHUB_PATH
+        sudo mkdir -p /usr/local/lib/android
+        if [ -e /usr/local/lib/android/sdk ]; then sudo rm -rf /usr/local/lib/android/sdk; fi
+        sudo ln -s "$ANDROID_SDK_ROOT" /usr/local/lib/android/sdk
+        sudo mkdir -p "$ANDROID_SDK_ROOT/tools/bin"
+        if [ -e "$ANDROID_SDK_ROOT/tools/bin/sdkmanager" ]; then sudo rm -f "$ANDROID_SDK_ROOT/tools/bin/sdkmanager"; fi
+        sudo ln -s "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_SDK_ROOT/tools/bin/sdkmanager"
+        sudo chmod +x "$ANDROID_SDK_ROOT/tools/bin/sdkmanager"
+
     # NDK installation https://github.com/actions/runner-images/issues/60
     - name: Setup Android NDKv2
       run: ${ANDROID_HOME}/tools/bin/sdkmanager --install "ndk;22.0.7026061"
