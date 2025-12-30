@@ -54,10 +54,10 @@ EOF
         sudo ln -s "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" "$ANDROID_SDK_ROOT/tools/bin/sdkmanager"
         sudo chmod +x "$ANDROID_SDK_ROOT/tools/bin/sdkmanager"
 
-    - name: Accept Android SDK licenses and install platforms/build-tools
+    - name: Accept Android SDK licenses and install platforms/build-tools and NDK
       run: |
         set -e
-        sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install "platform-tools" "platforms;android-31" "build-tools;31.0.0"
+        sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install "platform-tools" "platforms;android-31" "build-tools;31.0.0" "ndk;22.0.7026061"
         yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
 
     - name: Create keys.xml from secret
