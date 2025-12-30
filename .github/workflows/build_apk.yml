@@ -61,13 +61,13 @@ jobs:
       - name: Create keys.xml from secret
         if: ${{ secrets.DJI_APP_KEY != '' }}
         run: |
-          mkdir -p app/src/main/res/values
-          cat > app/src/main/res/values/keys.xml <<'EOF'
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-  <string name="dji_key">${{ secrets.DJI_APP_KEY }}</string>
-</resources>
-EOF
+            mkdir -p app/src/main/res/values
+            cat > app/src/main/res/values/keys.xml <<'EOF'
+            <?xml version="1.0" encoding="utf-8"?>
+            <resources>
+              <string name="dji_key">${{ secrets.DJI_APP_KEY }}</string>
+            </resources>
+            EOF
 
       - name: Ensure gradlew is executable
         run: chmod +x ./gradlew
