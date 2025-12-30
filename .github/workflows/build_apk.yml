@@ -89,8 +89,11 @@ EOF
           echo "app/build not found" >&2 || true
         fi
 
-    - name: Upload APK artifact
+    - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: rosettadrone-apk
-        path: app/build/outputs/apk/debug/*.apk
+        name: rosettadrone-artifacts
+        path: |
+          app/build/outputs/apk/**/*.apk
+          app/build/outputs/bundle/**/*.aab
+          app/build/outputs/**/*.apk
