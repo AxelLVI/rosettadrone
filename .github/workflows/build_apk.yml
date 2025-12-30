@@ -57,8 +57,10 @@ EOF
     - name: Accept Android SDK licenses and install platforms/build-tools and NDK
       run: |
         set -e
-        sdkmanager --sdk_root=$ANDROID_SDK_ROOT --install "platform-tools" "platforms;android-31" "build-tools;31.0.0" "ndk;22.0.7026061"
-        yes | sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses
+        SDKMANAGER="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+        chmod +x "$SDKMANAGER"
+        "$SDKMANAGER" --sdk_root="$ANDROID_SDK_ROOT" --install "platform-tools" "platforms;android-31" "build-tools;31.0.0" "ndk;22.0.7026061"
+        yes | "$SDKMANAGER" --sdk_root="$ANDROID_SDK_ROOT" --licenses
 
     - name: Create keys.xml from secret
       if: ${{ secrets.DJI_APP_KEY != '' }}

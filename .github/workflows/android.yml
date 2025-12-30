@@ -45,8 +45,10 @@ jobs:
     - name: Setup Android NDKv2 and accept licenses
       run: |
         set -e
-        sdkmanager --sdk_root=$ANDROID_HOME --install "ndk;22.0.7026061"
-        yes | sdkmanager --sdk_root=$ANDROID_HOME --licenses
+        SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+        chmod +x "$SDKMANAGER" || true
+        "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --install "ndk;22.0.7026061"
+        yes | "$SDKMANAGER" --sdk_root="$ANDROID_HOME" --licenses
     - name: set up JDK 11
       uses: actions/setup-java@v3
       with:
