@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Copia este archivo a app/src/main/res/values/keys.xml -->
+  <string name="dji_key">ed25dace5c67915950bd692f</string>
+</resources>
