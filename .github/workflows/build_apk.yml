@@ -79,6 +79,16 @@ EOF
     - name: Build Debug APK
       run: ./gradlew assembleDebug --no-daemon
 
+    - name: Debug: list build outputs
+      run: |
+        echo "Printing app build outputs"
+        if [ -d app/build ]; then
+          find app/build -type f -name '*.apk' -print || true
+          ls -R app/build/outputs || true
+        else
+          echo "app/build not found" >&2 || true
+        fi
+
     - name: Upload APK artifact
       uses: actions/upload-artifact@v4
       with:
